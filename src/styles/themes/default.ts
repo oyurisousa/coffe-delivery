@@ -16,5 +16,5 @@ export const defaultTheme = {
   'base-label': '#8D8686',
   'base-text': '#574F4D',
   'base-subtitle': '#403937',
-  'base-tile': '#272221',
+  'base-title': '#272221',
 } as const

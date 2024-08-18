@@ -13,12 +13,17 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body{
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
     background-color: ${(props) => props.theme.background};
     color: ${(props) => props.theme['base-text']};
     -webkit-font-smoothing: antialiased;
+    padding: 0 0.5rem;
   }
 
   body, input, textarea, button{
     font: 400 1rem Roboto, sans-serif;
   } 
+
 `
