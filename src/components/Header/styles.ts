@@ -33,4 +33,7 @@ export const Location = styled.div`
   border-radius: 6px;
   padding: 0.5rem;
   color: ${(props) => props.theme['purple-dark']};
+
+  span {
+  }
 `

@@ -1,6 +1,10 @@
 import styled from 'styled-components'
 
-export const CoffeeCardContainer = styled.div`
+interface CoffeeCardContainerProps {
+  variant?: 'catalog' | 'cart'
+}
+
+export const CoffeeCardContainer = styled.div<CoffeeCardContainerProps>`
   width: 100%;
   max-width: 275px;
   padding: 0 1% 1% 1%;
@@ -40,4 +44,44 @@ export const Tag = styled.span`
   font-weight: bold;
   font-size: 10px;
   line-height: 13px;
+`
+
+export const CoffeeCardCartContainer = styled.div`
+  width: 100%;
+  max-width: 368px;
+  padding: 0.25rem 0.25rem;
+  background-color: ${(props) => props.theme['base-card']};
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem 1rem;
+
+  .info-cart {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    .title-price {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  h3 {
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.3;
+    text-align: left;
+  }
+
+  span {
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.3;
+    text-align: right;
+    color: ${(props) => props.theme['base-text']};
+  }
 `

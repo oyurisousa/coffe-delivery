@@ -2,16 +2,16 @@ import { ShoppingCart } from '@phosphor-icons/react'
 import { CartContainer, CountdownCart } from './styles'
 
 interface CartProps {
-  quantItensCart?: number
+  quantItemsAddCart: number
 }
 
-export function Cart({ quantItensCart = 0 }: CartProps) {
+export function Cart({ quantItemsAddCart }: CartProps) {
   return (
     <CartContainer>
       <ShoppingCart size={22} color="#c47f17" weight="fill" />
 
-      {quantItensCart > 0 ? (
-        <CountdownCart>{quantItensCart}</CountdownCart>
+      {quantItemsAddCart > 0 ? (
+        <CountdownCart>{quantItemsAddCart}</CountdownCart>
       ) : (
         <></>
       )}

@@ -48,5 +48,37 @@ export const BuyContainer = styled.div`
     padding: 0.5rem;
     border-radius: 0.375rem;
     background-color: ${(props) => props.theme['purple-dark']};
+    cursor: pointer;
+  }
+`
+export const BuyCartContainer = styled(BuyContainer)`
+  justify-content: start;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+
+  .count {
+    padding: 0.3rem;
+  }
+
+  .cart {
+    /* height: 32px; */
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.25rem;
+
+    padding: 0.35rem;
+    border-radius: 0.375rem;
+    background-color: ${(props) => props.theme['base-button']};
+    cursor: pointer;
+    border: 0;
+
+    span {
+      font-size: 12px;
+      line-height: 19.2px;
+      text-align: left;
+      font-weight: lighter;
+    }
   }
 `

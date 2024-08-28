@@ -1,5 +1,4 @@
 import infoCoffee from '../../assets/info-coffee.png'
-import traditional from '../../assets/coffees/tradicional.png'
 import { Coffee, Package, ShoppingCart, Timer } from '@phosphor-icons/react'
 import {
   AdvantageContent,
@@ -9,8 +8,37 @@ import {
   InfoContent,
 } from './styles'
 import { CoffeeCard } from '../../components/CoffeeCard'
+import { useContext, useEffect } from 'react'
+import { CartContext, type Order } from '../../contexts/CartContext'
+import { api } from '../../lib/axios'
 
 export function Home() {
+  const { orders, setOrders } = useContext(CartContext)
+
+  useEffect(() => {
+    async function fetchOrdersAndTags() {
+      try {
+        const { data } = await api.get('/orders')
+
+        const ordersWithTags = await Promise.all(
+          data.map(async (item: Order) => {
+            const resolvedTags = await Promise.all(
+              item.tags.map(async (tag) => {
+                const tagResponse = await api.get(`/tags?id=${tag}`)
+                return tagResponse.data[0].value
+              }),
+            )
+            return { ...item, tags: resolvedTags }
+          }),
+        )
+        setOrders(ordersWithTags)
+      } catch (error) {
+        console.error('Erro ao buscar pedidos e tags:', error)
+      }
+    }
+
+    fetchOrdersAndTags()
+  }, [setOrders])
   return (
     <>
       <InfoContainer>
@@ -53,62 +81,19 @@ export function Home() {
       <CoffeeListContainer>
         <h2>Nossos Cafés</h2>
         <CoffeeListContent className="coffeelist">
-          <CoffeeCard
-            title="Expresso Tradicional"
-            description="O tradicional café feito com água quente e grãos moídos"
-            path={traditional}
-            price={9.9}
-            tasgs={['Tradicional', 'com leite']}
-          />
-          <CoffeeCard
-            title="Expresso Tradicional"
-            description="O tradicional café feito com água quente e grãos moídos"
-            path={traditional}
-            price={9.9}
-            tasgs={['Tradicional']}
-          />
-          <CoffeeCard
-            title="Expresso Tradicional"
-            description="O tradicional café feito com água quente e grãos moídos"
-            path={traditional}
-            price={9.9}
-            tasgs={['Tradicional']}
-          />
-          <CoffeeCard
-            title="Expresso Tradicional"
-            description="O tradicional café feito com água quente e grãos moídos"
-            path={traditional}
-            price={9.9}
-            tasgs={['Tradicional']}
-          />
-          <CoffeeCard
-            title="Expresso Tradicional"
-            description="O tradicional café feito com água quente e grãos moídos"
-            path={traditional}
-            price={9.9}
-            tasgs={['Tradicional']}
-          />
-          <CoffeeCard
-            title="Expresso Tradicional"
-            description="O tradicional café feito com água quente e grãos moídos"
-            path={traditional}
-            price={9.9}
-            tasgs={['Tradicional']}
-          />
-          <CoffeeCard
-            title="Expresso Tradicional"
-            description="O tradicional café feito com água quente e grãos moídos"
-            path={traditional}
-            price={9.9}
-            tasgs={['Tradicional']}
-          />
-          <CoffeeCard
-            title="Expresso Tradicional"
-            description="O tradicional café feito com água quente e grãos moídos"
-            path={traditional}
-            price={9.9}
-            tasgs={['Tradicional']}
-          />
+          {orders.map((item) => {
+            return (
+              <CoffeeCard
+                id={item.id}
+                key={`order_${item.id}`}
+                title={item.title}
+                description={item.description}
+                path={item.path}
+                price={item.price}
+                tasgs={item.tags}
+              />
+            )
+          })}
         </CoffeeListContent>
       </CoffeeListContainer>
     </>
