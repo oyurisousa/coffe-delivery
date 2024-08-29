@@ -7,11 +7,17 @@ import { CartContext } from '../../../../contexts/CartContext'
 interface BuyProps {
   price: number
   order: string
+  quant?: number
   variant?: 'catalog' | 'cart'
 }
 
-export function Buy({ price, order, variant = 'catalog' }: BuyProps) {
-  const [addedItems, setAddedItems] = useState(0)
+export function Buy({
+  price,
+  order,
+  quant = 0,
+  variant = 'catalog',
+}: BuyProps) {
+  const [addedItems, setAddedItems] = useState(quant)
   const { orders, setOrders } = useContext(CartContext)
 
   async function addItem() {
@@ -22,7 +28,7 @@ export function Buy({ price, order, variant = 'catalog' }: BuyProps) {
     setAddedItems((state) => state - 1)
   }
 
-  function handleAddItemsCart() {
+  async function handleAddItemsCart() {
     const newOrders = orders.map((item) => {
       if (item.id === order) {
         return { ...item, quant: addedItems }
@@ -33,6 +39,36 @@ export function Buy({ price, order, variant = 'catalog' }: BuyProps) {
 
     setOrders(newOrders)
     setAddedItems(0)
+  }
+  function handleRemoveItemCheckout() {
+    if (addedItems === 1) {
+      return handleRemoveItemsCart()
+    }
+
+    return setAddedItems((state) => state - 1)
+  }
+  async function handleAddItemCheckout() {
+    await addItem()
+    const newOrders = orders.map((item) => {
+      if (item.id === order) {
+        return { ...item, quant: addedItems }
+      }
+
+      return item
+    })
+
+    setOrders(newOrders)
+  }
+  async function handleRemoveItemsCart() {
+    const newOrders = orders.map((item) => {
+      if (item.id === order) {
+        return { ...item, quant: 0 }
+      }
+
+      return item
+    })
+
+    setOrders(newOrders)
   }
 
   return (
@@ -65,12 +101,17 @@ export function Buy({ price, order, variant = 'catalog' }: BuyProps) {
               size={20}
               color="#8047F8"
               weight="bold"
-              onClick={removeItem}
+              onClick={handleRemoveItemCheckout}
             />
             <span className="countdown">{addedItems}</span>
-            <Plus size={20} color="#8047F8" weight="bold" onClick={addItem} />
+            <Plus
+              size={20}
+              color="#8047F8"
+              weight="bold"
+              onClick={handleAddItemCheckout}
+            />
           </div>
-          <button className="cart">
+          <button className="cart" onClick={handleRemoveItemsCart}>
             <Trash size={16} color="#8047F8" weight="regular" />
             <span>Remover</span>
           </button>

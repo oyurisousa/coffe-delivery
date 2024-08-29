@@ -2,13 +2,16 @@ import { useContext, useEffect, useState } from 'react'
 import { CoffeeCard } from '../../components/CoffeeCard'
 import {
   AddressForm,
+  ButtonFibalizeOrder,
   CheckoutContainer,
   CompleteOrder,
   ConfirmOrder,
   PaymentMethod,
   SelectedCoffees,
+  Separator,
 } from './styles'
 import { CartContext, type Order } from '../../contexts/CartContext'
+import { priceFormatter } from '../../utils/formatter'
 
 export function Checkout() {
   const [itensAdd, setItensAdd] = useState<Order[]>([])
@@ -20,6 +23,18 @@ export function Checkout() {
 
     setItensAdd(items)
   }, [orders])
+
+  const calculateValueTotalItens = itensAdd.reduce(
+    (acc, cur) => {
+      acc.total += cur.price * cur.quant
+      acc.taxa = acc.total * 0.1
+      return acc
+    },
+    {
+      total: 0,
+      taxa: 0,
+    },
+  )
 
   return (
     <CheckoutContainer>
@@ -39,20 +54,50 @@ export function Checkout() {
       <SelectedCoffees>
         <h3>Cafés selecionados</h3>
         <ConfirmOrder>
-          {itensAdd.map((item, index) => {
-            return (
-              <CoffeeCard
-                id={item.id}
-                description={item.description}
-                path={item.path}
-                price={item.price}
-                tasgs={item.tags}
-                title={item.title}
-                key={index}
-                variant="cart"
-              />
-            )
-          })}
+          <div className="orders_added_cart">
+            {itensAdd.map((item, index) => {
+              return (
+                <>
+                  <CoffeeCard
+                    id={item.id}
+                    description={item.description}
+                    path={item.path}
+                    price={item.price}
+                    tasgs={item.tags}
+                    title={item.title}
+                    quant={item.quant}
+                    key={index}
+                    variant="cart"
+                  />
+                  <Separator></Separator>
+                </>
+              )
+            })}
+          </div>
+          <div className="total_cart">
+            <div className="total_itens">
+              Total de itens{' '}
+              <span>
+                {priceFormatter.format(calculateValueTotalItens.total)}
+              </span>
+            </div>
+            <div className="delivery_fee">
+              Entrega{' '}
+              <span>
+                {priceFormatter.format(calculateValueTotalItens.taxa)}
+              </span>
+            </div>
+            <div className="total">
+              Total{' '}
+              <span>
+                {priceFormatter.format(
+                  calculateValueTotalItens.taxa +
+                    calculateValueTotalItens.total,
+                )}
+              </span>
+            </div>
+          </div>
+          <ButtonFibalizeOrder>CONFIRMAR PEDIDO</ButtonFibalizeOrder>
         </ConfirmOrder>
       </SelectedCoffees>
     </CheckoutContainer>

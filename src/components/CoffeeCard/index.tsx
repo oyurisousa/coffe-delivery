@@ -8,6 +8,7 @@ export interface CoffeeCardProps {
   tasgs: string[]
   path: string
   id: string
+  quant?: number
   variant?: 'catalog' | 'cart'
 }
 
@@ -18,6 +19,7 @@ export function CoffeeCard({
   path,
   price,
   tasgs,
+  quant,
   variant = 'catalog',
 }: CoffeeCardProps) {
   return (
@@ -42,7 +44,7 @@ export function CoffeeCard({
               <h3>{title}</h3>
               <span>{price}</span>
             </div>
-            <Buy order={id} price={price} variant={variant} />
+            <Buy order={id} quant={quant} price={price} variant={variant} />
           </div>
         </CoffeeCardCartContainer>
       )}
