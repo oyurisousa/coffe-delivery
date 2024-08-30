@@ -7,11 +7,20 @@ import {
   CompleteOrder,
   ConfirmOrder,
   PaymentMethod,
+  PaymentType,
+  PaymentTypeButton,
   SelectedCoffees,
   Separator,
 } from './styles'
 import { CartContext, type Order } from '../../contexts/CartContext'
 import { priceFormatter } from '../../utils/formatter'
+import {
+  Bank,
+  CreditCard,
+  CurrencyDollar,
+  MapPinLine,
+  Money,
+} from '@phosphor-icons/react'
 
 export function Checkout() {
   const [itensAdd, setItensAdd] = useState<Order[]>([])
@@ -40,16 +49,49 @@ export function Checkout() {
     <CheckoutContainer>
       <CompleteOrder>
         <h3>Complete seu pedido</h3>
-        <AddressForm action="/success">
-          <input type="text" id="cep" placeholder="CEP" />
-          <input type="text" id="street" placeholder="Rua" />
-          <input type="text" id="number" placeholder="Número" />
-          <input type="text" id="complement" placeholder="Complemento" />
-          <input type="text" id="neighborhood" placeholder="Bairro" />
-          <input type="text" id="city" placeholder="Cidade" />
-          <input type="text" id="uf" placeholder="UF" />
+        <AddressForm>
+          <div className="info_address">
+            <MapPinLine color="#C47F17" size={22} />
+            <div>
+              <h4>Endereço de Entrega</h4>
+              <p>Informe o endereço onde deseja receber seu pedido </p>
+            </div>
+          </div>
+          <form>
+            <input type="text" id="cep" placeholder="CEP" />
+            <input type="text" id="street" placeholder="Rua" />
+            <input type="text" id="number" placeholder="Número" />
+            <input type="text" id="complement" placeholder="Complemento" />
+            <input type="text" id="neighborhood" placeholder="Bairro" />
+            <input type="text" id="city" placeholder="Cidade" />
+            <input type="text" id="uf" placeholder="UF" />
+          </form>
         </AddressForm>
-        <PaymentMethod></PaymentMethod>
+        <PaymentMethod>
+          <div className="info_payment">
+            <CurrencyDollar color="#8047F8" size={22} />
+            <div>
+              <h4>Pagamento</h4>
+              <p>
+                O pagamento é feito na entrega. Escolha a forma que deseja pagar
+              </p>
+            </div>
+          </div>
+          <PaymentType>
+            <PaymentTypeButton value="cart-credit">
+              <CreditCard size={16} color="#8047F8" />
+              Cartão de Crédito
+            </PaymentTypeButton>
+            <PaymentTypeButton value="cart-debit">
+              <Bank size={16} color="#8047F8" />
+              Cartão de Débito
+            </PaymentTypeButton>
+            <PaymentTypeButton value="money">
+              <Money size={16} color="#8047F8" />
+              Dinheiro
+            </PaymentTypeButton>
+          </PaymentType>
+        </PaymentMethod>
       </CompleteOrder>
       <SelectedCoffees>
         <h3>Cafés selecionados</h3>
@@ -97,7 +139,9 @@ export function Checkout() {
               </span>
             </div>
           </div>
-          <ButtonFibalizeOrder>CONFIRMAR PEDIDO</ButtonFibalizeOrder>
+          <ButtonFibalizeOrder disabled={itensAdd.length === 0}>
+            CONFIRMAR PEDIDO
+          </ButtonFibalizeOrder>
         </ConfirmOrder>
       </SelectedCoffees>
     </CheckoutContainer>
