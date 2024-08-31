@@ -1,30 +1,39 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# COFFEE DELIVERY
 
-Currently, two official plugins are available:
+Este é um projeto React que utiliza o `json-server` para simular um back-end. O objetivo deste projeto é [insira aqui uma breve descrição do objetivo do seu projeto].
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Requisitos
 
-## Expanding the ESLint configuration
+- Node.js (v14 ou superior)
+- npm (v6 ou superior)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Passos para Rodar o Projeto
 
-- Configure the top-level `parserOptions` property like this:
+### 1. Instalar as Dependências
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+Antes de rodar o projeto, você precisa instalar todas as dependências necessárias. Para isso, execute o comando abaixo na raiz do projeto:
+
+```bash
+npm install
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### 2.Rodar o Front-end
+Após instalar as dependências, você pode iniciar o servidor de desenvolvimento React. Para isso, execute o seguinte comando:
+
+```bash
+npm run dev
+```
+
+### 3. Rodar o JSON Server
+Para iniciar o json-server e simular o back-end, execute o comando abaixo:
+
+```bash
+npm run start:server
+```
+Nota: O json-server é uma ferramenta útil para prototipagem rápida e desenvolvimento front-end sem a necessidade de um back-end real. A configuração acima assume que você tem um arquivo db.json na raiz do projeto.
+
+## Tecnologias Utilizadas
+- React
+- Styled components
+- JSON Server (para simulação do back-end)
