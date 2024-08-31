@@ -1,7 +1,7 @@
 
 # COFFEE DELIVERY
 
-Este é um projeto React que utiliza o `json-server` para simular um back-end. O objetivo deste projeto é [insira aqui uma breve descrição do objetivo do seu projeto].
+Este é um projeto React que utiliza o `json-server` para simular um back-end. O objetivo deste projeto é praticar alguns conceitos iniciais de react, como contexts. 
 
 ## Requisitos
 
